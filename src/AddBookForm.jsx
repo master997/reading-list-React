@@ -1,26 +1,28 @@
 import { useState } from "react";
 
-const AddBookForm = () => {
-  const [bookTitle, updateBookTitle] = useState("");
-  const [authorName, updateAuthorName] = useState("");
+const AddBookForm = (props) => {
+  const [title, changeTitle] = useState("");
+  const [author, changeAuthor] = useState("");
 
-  const handleSubmit = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
+    props.onAddBook({ title, author });
+    console.log(title, author);
   };
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={submitHandler}>
         <input
-          value={bookTitle}
-          onChange={(e) => updateBookTitle(e.target.value)}
-          placeholder="book-title"
-        />
+          placeholder="Book Name"
+          value={title}
+          onChange={(e) => changeTitle(e.target.value)}
+        ></input>
         <input
-          value={authorName}
-          onChange={(e) => updateAuthorName(e.target.value)}
           placeholder="Author Name"
-        />
-        <button type="submit">Add book</button>
+          value={author}
+          onChange={(e) => changeAuthor(e.target.value)}
+        ></input>
+        <button type="submit">Add Book</button>
       </form>
     </div>
   );
