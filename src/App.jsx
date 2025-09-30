@@ -1,17 +1,24 @@
-import "./App.css";
 import { useState } from "react";
-import { AddBookForm } from "./AddBookForm";
+import AddBookForm from "./AddBookForm";
+import BookList from "./BookList";
+import "./App.css";
 
 function App() {
   const [bookList, setBookList] = useState([]);
-  const handleAddBook = (newBook) => {
-    setBookList((prevList) => [...prevList, newBook]);
-  };
-  return (
-    <div>
-      <h1>My reading list</h1>
 
-      <AddBookForm onAddBook={handleAddBook} />
+  const addBook = (title, author) => {
+    setBookList([...bookList, { id: Date.now(), title, author }]);
+  };
+
+  const removeBook = (id) => {
+    setBookList(bookList.filter((book) => book.id !== id));
+  };
+
+  return (
+    <div className="App">
+      <h1>Reading List</h1>
+      <AddBookForm addBook={addBook} />
+      <BookList books={bookList} removeBook={removeBook} />
     </div>
   );
 }

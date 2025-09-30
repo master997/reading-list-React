@@ -1,30 +1,35 @@
 import { useState } from "react";
 
-const AddBookForm = (props) => {
-  const [title, changeTitle] = useState("");
-  const [author, changeAuthor] = useState("");
+function AddBookForm({ addBook }) {
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
 
-  const submitHandler = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    props.onAddBook({ title, author });
-    console.log(title, author);
+    if (title.trim() && author.trim()) {
+      addBook(title, author);
+      setTitle("");
+      setAuthor("");
+    }
   };
+
   return (
-    <div>
-      <form onSubmit={submitHandler}>
-        <input
-          placeholder="Book Name"
-          value={title}
-          onChange={(e) => changeTitle(e.target.value)}
-        ></input>
-        <input
-          placeholder="Author Name"
-          value={author}
-          onChange={(e) => changeAuthor(e.target.value)}
-        ></input>
-        <button type="submit">Add Book</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        placeholder="Book Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        required
+      />
+      <input
+        placeholder="Author Name"
+        value={author}
+        onChange={(e) => setAuthor(e.target.value)}
+        required
+      />
+      <button type="submit">Add Book</button>
+    </form>
   );
-};
-export { AddBookForm };
+}
+
+export default AddBookForm;
